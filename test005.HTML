@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>new document</title>
+<meta name="generator" content="editplus" />
+<meta name="author" content="" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<script type="text/javascript" src="jquery-1.4.2.js" ></script>
+<script type="text/javascript" src="jquery.cookie.js" ></script>
+<style type="text/css">
+p {margin:0; padding:0; font-size:12px;}
+</style>
+
+<!--本程序写于2012年7月25日15:41:18-->
+
+<script type="text/javascript">
+	/*加入三个变量，分别代表3个div的位置*/
+var div1Pos =1;
+var div2Pos =2;
+var div3Pos =3;	
+
+/*
+loca函数传递cookie变量order的值(是类似312这样的，i,j,k是将它分开的3个值，i,j,k分别代表div1Pos,div2Pos,div3Pos的值)
+loca函数实现根据cookie存储的3个div的位置，重新恢复原来的位置。
+*/
+function loca(i,j,k){
+	switch (i){
+		case "1":
+		break
+		case "2":
+		$("#div1").css("top","320px");
+		$(".div1Up").show();
+		break
+		case "3":
+		$("#div1").css("top","640px");
+		$(".div1Up").show();
+		$(".div1Down").hide();
+		break
+	}
+	switch (j){
+		case "1":
+		$("#div2").css("top","0px");
+		$(".div2Up").hide();
+		break
+		case "2":
+		break
+		case "3":
+		$("#div2").css("top","640px");
+		$(".div2Down").hide();
+		break
+	}
+	
+	switch (k){
+		case "1":
+		$("#div3").css("top","0px");
+		$(".div3Up").hide();
+		$(".div3Down").show();
+		break
+		case "2":
+		$("#div3").css("top","320px");
+		$(".div3Down").show();
+		break
+		case "3":
+		break
+	}
+}
+
+$(function(){
+	var mycookie = $.cookie("order");
+	if (mycookie){                  //如果存在cookie的话，就恢复原来的位置，否则为默认值。
+		div1Pos = mycookie.charAt(0);
+		div2Pos = mycookie.charAt(1);
+		div3Pos = mycookie.charAt(2);
+		loca(div1Pos,div2Pos,div3Pos);
+	}
+});
+
+
+	/*根据3个div位置的不同，做出不同的移动动画，显示隐藏'上移'、'下移', 然后更新div的新位置*/
+$(function(){
+		/*div1点击下移的动作*/
+		$(".div1Down").click(function(){
+			if (div1Pos == 1 && div2Pos == 2){
+			
+				$("#div1").animate({top:"320px"},"slow");
+				$("#div2").animate({top:"0px"},"slow");
+				$(".div1Up").show("slow");
+				$(".div2Up").hide("slow");
+				div1Pos = 2;
+				div2Pos = 1;
+				$.cookie("order","213");
+			} else if (div1Pos == 1 && div3Pos == 2){
+				$("#div1").animate({top:"320px"},"slow");
+				$("#div3").animate({top:"0px"},"slow");
+				$(".div1Up").show("slow");
+				$(".div3Up").hide("slow");
+				div1Pos = 2;
+				div3Pos = 1;
+				$.cookie("order","231");
+			} else if (div1Pos == 2 && div2Pos == 3){
+				$("#div1").animate({top:"640px"},"slow");
+				$("#div2").animate({top:"320px"},"slow");
+				$(".div1Down").hide("slow");
+				$(".div2Down").show("slow");
+				div1Pos = 3;
+				div2Pos = 2;
+				$.cookie("order","321");
+			} else if (div1Pos == 2 && div3Pos == 3){
+				$("#div1").animate({top:"640px"},"slow");
+				$("#div3").animate({top:"320px"},"slow");
+				$(".div1Down").hide("slow");
+				$(".div3Down").show("slow");
+				div1Pos = 3;
+				div3Pos = 2;
+				$.cookie("order","312");
+			} 
+			
+			
+		});
+		
+		/*div1点击上移的动作*/
+		$(".div1Up").click(function(){
+			if (div1Pos == 2 && div2Pos == 1){
+				$("#div1").animate({top:"0px"},"slow");
+				$("#div2").animate({top:"320px"},"slow");
+				$(".div1Up").hide("slow");
+				$(".div2Up").show("slow");
+				div1Pos = 1;
+				div2Pos = 2;
+				$.cookie("order","123");
+			} else if (div1Pos == 2 && div3Pos == 1){
+				$("#div1").animate({top:"0px"},"slow");
+				$("#div3").animate({top:"320px"},"slow");
+				$(".div1Up").hide("slow");
+				$(".div3Up").show("slow");
+				div1Pos = 1;
+				div3Pos = 2;
+				$.cookie("order","132");
+			} else if (div1Pos == 3 && div2Pos == 2){
+				$("#div1").animate({top:"320px"},"slow");
+				$("#div2").animate({top:"640px"},"slow");
+				$(".div1Down").show("slow");
+				$(".div2Down").hide("slow");
+				div1Pos = 2;
+				div2Pos = 3;
+				$.cookie("order","231");
+			} else if (div1Pos == 3 && div3Pos == 2){
+				$("#div1").animate({top:"320px"},"slow");
+				$("#div3").animate({top:"640px"},"slow");
+				$(".div1Down").show("slow");
+				$(".div3Down").hide("slow");
+				div1Pos = 2;
+				div3Pos = 3;
+				$.cookie("order","213");
+			}
+				
+		});
+		
+		/*div2点击下移的动作*/
+		$(".div2Down").click(function(){
+			if (div2Pos == 1 && div1Pos == 2){
+			
+				$("#div2").animate({top:"320px"},"slow");
+				$("#div1").animate({top:"0px"},"slow");
+				$(".div2Up").show("slow");
+				$(".div1Up").hide("slow");
+				div2Pos = 2;
+				div1Pos = 1;
+				$.cookie("order","123");
+			} else if (div2Pos == 1 && div3Pos == 2){
+				$("#div2").animate({top:"320px"},"slow");
+				$("#div3").animate({top:"0px"},"slow");
+				$(".div2Up").show("slow");
+				$(".div3Up").hide("slow");
+				div2Pos = 2;
+				div3Pos = 1;
+				$.cookie("order","321");
+			} else if (div2Pos == 2 && div1Pos == 3){
+				$("#div2").animate({top:"640px"},"slow");
+				$("#div1").animate({top:"320px"},"slow");
+				$(".div2Down").hide("slow");
+				$(".div1Down").show("slow");
+				div2Pos = 3;
+				div1Pos = 2;
+				$.cookie("order","231");
+			} else if (div2Pos == 2 && div3Pos == 3){
+				$("#div2").animate({top:"640px"},"slow");
+				$("#div3").animate({top:"320px"},"slow");
+				$(".div2Down").hide("slow");
+				$(".div3Down").show("slow");
+				div2Pos = 3;
+				div3Pos = 2;
+				$.cookie("order","132");
+			} 
+			
+			
+		});
+		/*div2点击上移的动作*/
+		$(".div2Up").click(function(){
+			if (div2Pos == 2 && div1Pos == 1){
+				$("#div2").animate({top:"0px"},"slow");
+				$("#div1").animate({top:"320px"},"slow");
+				$(".div2Up").hide("slow");
+				$(".div1Up").show("slow");
+				div2Pos = 1;
+				div1Pos = 2;
+				$.cookie("order","213");
+			} else if (div2Pos == 2 && div3Pos == 1){
+				$("#div2").animate({top:"0px"},"slow");
+				$("#div3").animate({top:"320px"},"slow");
+				$(".div2Up").hide("slow");
+				$(".div3Up").show("slow");
+				div2Pos = 1;
+				div3Pos = 2;
+				$.cookie("order","312");
+			} else if (div2Pos == 3 && div1Pos == 2){
+				$("#div2").animate({top:"320px"},"slow");
+				$("#div1").animate({top:"640px"},"slow");
+				$(".div2Down").show("slow");
+				$(".div1Down").hide("slow");
+				div2Pos = 2;
+				div1Pos = 3;
+				$.cookie("order","321");
+			} else if (div2Pos == 3 && div3Pos == 2){
+				$("#div2").animate({top:"320px"},"slow");
+				$("#div3").animate({top:"640px"},"slow");
+				$(".div2Down").show("slow");
+				$(".div3Down").hide("slow");
+				div2Pos = 2;
+				div3Pos = 3;
+				$.cookie("order","123");
+			}
+				
+		});
+		/*div3点击下移的动作*/
+		$(".div3Down").click(function(){
+			if (div3Pos == 1 && div1Pos == 2){
+			
+				$("#div3").animate({top:"320px"},"slow");
+				$("#div1").animate({top:"0px"},"slow");
+				$(".div3Up").show("slow");
+				$(".div1Up").hide("slow");
+				div3Pos = 2;
+				div1Pos = 1;
+				$.cookie("order","132");
+			} else if (div3Pos == 1 && div2Pos == 2){
+				$("#div3").animate({top:"320px"},"slow");
+				$("#div2").animate({top:"0px"},"slow");
+				$(".div3Up").show("slow");
+				$(".div2Up").hide("slow");
+				div3Pos = 2;
+				div2Pos = 1;
+				$.cookie("order","312");
+			} else if (div3Pos == 2 && div1Pos == 3){
+				$("#div3").animate({top:"640px"},"slow");
+				$("#div1").animate({top:"320px"},"slow");
+				$(".div3Down").hide("slow");
+				$(".div1Down").show("slow");
+				div3Pos = 3;
+				div1Pos = 2;
+				$.cookie("order","213");
+			} else if (div3Pos == 2 && div2Pos == 3){
+				$("#div3").animate({top:"640px"},"slow");
+				$("#div2").animate({top:"320px"},"slow");
+				$(".div3Down").hide("slow");
+				$(".div2Down").show("slow");
+				div3Pos = 3;
+				div2Pos = 2;
+				$.cookie("order","123");
+			} 
+			
+			
+		});
+		
+		
+		/*div3点击上移的动作*/
+		$(".div3Up").click(function(){
+			if (div3Pos == 2 && div1Pos == 1){
+				$("#div3").animate({top:"0px"},"slow");
+				$("#div1").animate({top:"320px"},"slow");
+				$(".div3Up").hide("slow");
+				$(".div1Up").show("slow");
+				div3Pos = 1;
+				div1Pos = 2;
+				$.cookie("order","231");
+			} else if (div3Pos == 2 && div2Pos == 1){
+				$("#div3").animate({top:"0px"},"slow");
+				$("#div2").animate({top:"320px"},"slow");
+				$(".div3Up").hide("slow");
+				$(".div2Up").show("slow");
+				div3Pos = 1;
+				div2Pos = 2;
+				$.cookie("order","321");
+			} else if (div3Pos == 3 && div1Pos == 2){
+				$("#div3").animate({top:"320px"},"slow");
+				$("#div1").animate({top:"640px"},"slow");
+				$(".div3Down").show("slow");
+				$(".div1Down").hide("slow");
+				div3Pos = 2;
+				div1Pos = 3;
+				$.cookie("order","312");
+			} else if (div3Pos == 3 && div2Pos == 2){
+				$("#div3").animate({top:"320px"},"slow");
+				$("#div2").animate({top:"640px"},"slow");
+				$(".div3Down").show("slow");
+				$(".div2Down").hide("slow");
+				div3Pos = 2;
+				div2Pos = 3;
+				$.cookie("order","132");
+			}
+				
+		});
+});
+</script>
+
+
+</head>
+<body>
+<div id="big" style="position:relative; border:1px dashed blue;height:940px;">
+	<div style="width:300px; height:300px; border:2px solid red;margin:0 auto; position:absolute; left:500px" id="div1">
+		<div style="background-color:yellow;padding:3px 5px; height:15px;">
+		<p class="div1Down" style="float:right;cursor:pointer;">下移</p>
+		<p style="display:none; float:right;cursor:pointer; margin-right:3px;" class="div1Up">上移</p>
+		</div>
+		div1
+	</div>
+	<div style="width:300px; height:300px; border:2px solid green;margin:0 auto;position:absolute; left:500px; top:320px;" id="div2">
+		<div style="background-color:yellow;padding:3px 5px; height:15px;">
+		<p class="div2Down" style="float:right;cursor:pointer;">下移</p>
+		<p style="float:right;cursor:pointer; margin-right:3px;" class="div2Up">上移</p>
+		</div>
+		div2
+	</div>
+	
+	<div style="width:300px; height:300px; border:2px solid purple;margin:0 auto;position:absolute; left:500px; top:640px;" id="div3">
+		<div style="background-color:yellow;padding:3px 5px; height:15px;">
+		<p class="div3Down" style="float:right;cursor:pointer;display:none;">下移</p>
+		<p style="float:right;cursor:pointer; margin-right:3px;" class="div3Up">上移</p>
+		</div>
+		div3
+	</div>
+</div>
+
+</body>
+</html>
